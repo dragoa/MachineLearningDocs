@@ -1,17 +1,27 @@
-# Quartz v5
+# Machine Learning Docs
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+Personal notes on machine learning and deep learning with PyTorch.
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
+**📖 Read the notes: <https://dragoa.github.io/MachineLearningDocs/>**
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+## Topics
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+- **PyTorch for Deep Learning**
+  - Hyperparameter optimization: architectural, training and regularization hyperparameters, learning rate schedulers, metrics
+  - A flexible CNN architecture on CIFAR-10
+  - Real-world examples
 
-## Sponsors
+## Run locally
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+Requires Node.js 22+.
+
+```bash
+npm install
+npx quartz build --serve
+```
+
+Then open <http://localhost:8080>.
+
+## Credits
+
+Built with [Quartz v5](https://quartz.jzhao.xyz/) by [jackyzha0](https://github.com/jackyzha0), released under the MIT license (see [LICENSE.txt](LICENSE.txt)).
