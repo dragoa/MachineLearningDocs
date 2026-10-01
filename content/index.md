@@ -1,7 +1,8 @@
-   ---
-   title: Machine Learning Docs
-   ---
+---
+title: Machine Learning Docs
+---
 
-   Welcome! Notes on machine learning and PyTorch.
+Notes on machine learning and PyTorch.
 
-   - [[pytorch-for-deeplearning/index|PyTorch for Deep Learning]]
+- [[Pytorch for DeepLearning/Hyperparameter Optimization/Hyperparameter Optimization|Hyperparameter Optimization]]
+- [[Pytorch for DeepLearning/Hyperparameter Optimization/Flexible CNN Architecture|Flexible CNN Architecture]]
