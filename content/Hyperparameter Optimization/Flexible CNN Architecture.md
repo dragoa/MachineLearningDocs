@@ -7,8 +7,8 @@ Starting from the CIFAR-10 dataset, we build a flexible CNN (Convolutional Neura
 A CNN block consist of:
 
 - a **[[Convolutional Layer|convolutional layer]]** that computes the convolution operation using a given number of filters and a kernel size
-- a **ReLU activation function**
-- a **max pooling layer** which a form of regularization that takes the maximum value from a pool of values
+- a **ReLU [[Activation Functions|activation function]]**
+- a **max [[Pooling|pooling]] layer** which a form of regularization that takes the maximum value from a pool of values
 
 In a flexible architecture, we want to easily change the values of these architectural hyperparameters.
 

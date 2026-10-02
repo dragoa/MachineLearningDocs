@@ -246,10 +246,10 @@ Several hyperparameters can be used to enhance the performance of a model.
 └───────────────────────┴───────────────────────┴───────────────────────┘
 ```
 ##### Architectural
-![[Architectural#Definition]]
+![[Architectural Hyperparameters#Definition]]
 
 ##### Training
-![[Training#Definition]]
+![[Training Hyperparameters#Definition]]
 
 ##### Regularization
 

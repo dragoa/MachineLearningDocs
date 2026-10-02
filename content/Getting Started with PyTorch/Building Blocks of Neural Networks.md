@@ -74,3 +74,5 @@ The **output layer** produces the final prediction, such as the estimated deli
 
 The important thing to understand is that a neural network is built from relatively simple mathematical operations.
 By connecting many neurons and layers together, neural networks can learn much more complex relationships from data.
+
+Look next: [[Machine Learning Pipelines]]
