@@ -17,6 +17,8 @@ For the delivery data, this could include removing impossible delivery times, re
 We might also need to perform **feature engineering**, where we ==create useful features from the raw data.==
 
 > **Many machine learning problems are caused by poor or messy data rather than incorrect model mathematics.**
+
+See more at: [[PyTorch Data Pipeline]]
 ## 3. Model Building
 
 Once the data is cleaned and ready, we can design the model that will learn from it.
@@ -43,8 +45,8 @@ The model makes predictions based on its current parameters and compares those p
 During training, we need several components to control the learning process:
 
 - A way to **measure prediction errors** → the [[Loss Function]] 
-- A way to determine **how the model should improve** → [[Gradient|gradients]]
-- A method for **updating the model's parameters** → the [[Hyperparameter Optimization|Optimizer]]
+- A way to determine **how the model should improve** → [[Omptimizer & Gradients|gradients]]
+- A method for **updating the model's parameters** → the [[Omptimizer & Gradients|Optimizer]]
 - Training settings that control how the model learns, such as the [[Learning Rate]]
 
 These components work together inside the **training loop**:

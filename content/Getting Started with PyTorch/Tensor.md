@@ -462,3 +462,5 @@ The last dimensions are `3` and `2`. They are not equal, and neither is `1`,
 - Incompatible shapes → PyTorch raises a `RuntimeError`.
 
 Broadcasting appears everywhere in deep learning, including adjusting multiple features across batches, combining different dimensions of data, and applying transformations efficiently.
+
+Look next: [[PyTorch Data Pipeline]]
