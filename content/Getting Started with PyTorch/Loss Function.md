@@ -103,7 +103,7 @@ For example, suppose the actual digit is `3`.
 - **Prediction A:** The model assigns 95% probability to `7` and only 2% to `3`. ==This produces a high loss because the model is confidently wrong.==
 - **Prediction B:** The model assigns 55% probability to `7` and 30% to `3`. ==This produces a lower loss because the model assigns more probability to the correct class.==
 
-![[Pasted image 20261015174832.png]]
+![[cross_entropy_loss.png]]
 
 ==🟠The key idea is that cross-entropy penalizes the model when it assigns a low probability to the correct answer. The more confident the model is in an incorrect answer, the more severe the penalty can be.==
 ### Cross-Entropy formula
