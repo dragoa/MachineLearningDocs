@@ -81,7 +81,7 @@ import torch.optim as optim
 ```
 
 - `torch` → PyTorch's core functionality, including tensors.
-- `torch.nn` → tools for building neural networks and layers. 
+- `torch.nn` → tools for building [[Neural Network|neural networks]] and layers. 
 - `torch.optim` → optimization algorithms used during training.
 
 ### 1. Define the data
@@ -208,4 +208,7 @@ with torch.no_grad():
 
 During training, PyTorch needs to track operations so that it can calculate gradients. During inference, we don't need those gradients, so `torch.no_grad()` avoids that extra work and makes inference more efficient.
 
-Look next: [[Activation Functions]]
+Look next: 
+[[Activation Functions]]
+[[PyTorch Data Pipeline]]
+[[PyTorch Model Pipeline]]

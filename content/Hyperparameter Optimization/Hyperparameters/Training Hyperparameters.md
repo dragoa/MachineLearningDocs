@@ -14,9 +14,9 @@ Optimizer
     └─ Adam
 ```
 
-- **Gradient Descent** — adjusts weights and biases based on a gradient to minimize the loss function.
-- **RMSProp** (Root Mean Squared Propagation) — adjusts the learning rate for each parameter individually, using a moving average of recent gradients.
-- **Adam** (Adaptive Moment Estimation) — one of the most widely used optimizers. Computes adaptive learning rates for each parameter using momentum. ==Straightforward to implement, computationally efficient, and requires little memory.==
+- **Gradient Descent**: adjusts weights and biases based on a gradient to minimize the loss function.
+- **RMSProp** (Root Mean Squared Propagation): adjusts the learning rate for each parameter individually, using a moving average of recent gradients.
+- **Adam** (Adaptive Moment Estimation): one of the most widely used optimizers. Computes adaptive learning rates for each parameter using momentum. ==Straightforward to implement, computationally efficient, and requires little memory.==
 
 **Batch size** The number of samples processed before updating the model's internal parameters. Hardware limitations like RAM and GPU capacity can dictate your choice here.
 
@@ -25,7 +25,7 @@ Optimizer
 
 ==Starting with a batch size of 32 or 64==, depending on your data, is often a good approach.
 
-Look next: 
+Look also: 
+[[Omptimizer & Gradients]]
 [[Learning Rate Schedulers]]
-[[Adam]]
-[[SGD]]
+

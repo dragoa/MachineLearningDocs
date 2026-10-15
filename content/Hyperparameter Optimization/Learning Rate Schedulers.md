@@ -12,7 +12,7 @@
 
 **Idea:** ==Multiply the learning rate by `gamma` every `step_size` epochs, regardless of how the model is performing.==
 
-![StepLR|542](images/steplr.png)
+![StepLR|542](steplr.png)
 
 **Parameters:**
 
@@ -43,7 +43,7 @@ scheduler.step()
 
 **Idea:** ==Only reduce the learning rate when the model stops improving.== Watches a metric and reacts.
 
-![ReduceLROnPlateau|546](images/reduce_lr_plateau.png)
+![ReduceLROnPlateau|546](reduce_lr_plateau.png)
 
 **Parameters:**
 - `mode` — `'max'` if tracking accuracy (higher = better), `'min'` if tracking loss (lower = better)
@@ -78,7 +78,7 @@ scheduler.step(val_acc)
 
 **Idea:** ==Smoothly reduce the learning rate following a cosine curve== from its initial value down to a minimum, no sudden drops.
 
-![CosineAnnealingLR|559](images/cosine_annealing.png)
+![CosineAnnealingLR|559](cosine_annealing.png)
 
 **Parameters:**
 - `T_max` — total number of epochs (length of the cosine cycle)

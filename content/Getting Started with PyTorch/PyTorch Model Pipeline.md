@@ -207,4 +207,4 @@ model.train()
 
 This restores the training behavior of layers such as dropout and batch normalization.
 
-Next, you'll take a closer look at [[Loss Functions]] and [[Omptimizer & Gradients]] to understand how neural networks measure errors and update their parameters.
+Next, you'll take a closer look at [[Loss Function]] and [[Omptimizer & Gradients]] to understand how neural networks measure errors and update their parameters.

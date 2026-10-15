@@ -176,7 +176,7 @@ For an example of how to choose a metric in a real scenario, take a look at [[Re
   
 The learning rate determines the step size the optimizer takes when updating weights at each iteration. Its relationship with accuracy follows a clear pattern:
 
-![Learning Rate vs Accuracy|621](images/lr_vs_accuracy.png)
+![Learning Rate vs Accuracy|621](lr_vs_accuracy.png)
   
 - **Too small** → training is slow and the model may get stuck at a suboptimal point
 - **Too large** → the model overshoots and bounces around, never converging
@@ -220,7 +220,7 @@ Training           Learning rate, batch size,
 
 A fixed learning rate always forces a trade-off between speed and precision:
 
-![High vs Low Learning Rate|511](images/high_vs_low_lr.png)
+![High vs Low Learning Rate|511](high_vs_low_lr.png)
 
 - ==**High LR:** Accuracy rises fast in early epochs, then flatlines==
 - ==**Low LR:** Climbs slowly but eventually surpasses the high LR, at the cost of many more epochs==
