@@ -1,4 +1,4 @@
-Neural networks are useful for solving problems where we have data containing patterns that we want the model to learn. While they are inspired by biology, **neurons in this context are just mathematical units**. ==They're tools with [[Hyperparameter Optimization|adjustable parameters]] that shift to match the patterns in your data.==
+Neural networks are useful for solving problems where we have data containing patterns that we want the model to learn. While they are inspired by biology, **neurons in this context are just mathematical units**. ==They're tools with adjustable parameters that shift to match the patterns in your data.==
 
 Let's tackle a delivery problem where a delivery driver is assigned an order based on the distance they need to travel. Here we can see a pattern in our historical delivery data:
 
@@ -8,7 +8,7 @@ We can see that as the distance increases, the delivery time also tends to incre
 ## Neuron
 ==A single neuron can be represented as a linear equation with two parameters: the weight and the bias.==
 
-![[neuron.png|399]]
+![[neuron.png|380]]
 
 ==The weight controls the slope of the line, while the bias shifts the line up or down.==
 

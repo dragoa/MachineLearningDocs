@@ -206,3 +206,4 @@ with torch.no_grad():
 
 During training, PyTorch needs to track operations so that it can calculate gradients. During inference, we don't need those gradients, so `torch.no_grad()` avoids that extra work and makes inference more efficient.
 
+Look next: [[Activation Functions]]
