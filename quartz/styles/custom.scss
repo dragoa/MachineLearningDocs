@@ -1,3 +1,41 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+pre {
+  background-color: color-mix(in srgb, var(--secondary) 8%, var(--light));
+  border-color: color-mix(in srgb, var(--secondary) 24%, var(--lightgray));
+
+  &:has(> code.mermaid) {
+    background: transparent;
+  }
+
+  & > code[data-theme*=" "] {
+    background-color: transparent;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+figure[data-rehype-pretty-code-figure] {
+  margin-block: 1.25rem;
+}
+
+.page .center article {
+  p {
+    line-height: 1.75rem;
+    margin-block: 0 1rem;
+  }
+
+  li {
+    line-height: 1.7rem;
+
+    & + li {
+      margin-top: 0.25rem;
+    }
+  }
+
+  blockquote {
+    background-color: color-mix(in srgb, var(--secondary) 6%, var(--light));
+    border-radius: 0 8px 8px 0;
+    margin-block: 1.25rem;
+    padding: 0.75rem 1rem;
+  }
+}
