@@ -50,8 +50,8 @@ Notes on choosing model and training settings, measuring results, and improving 
 
 Short notes and entry points for core PyTorch building blocks:
 
-- [[PyTorch Docs/PyTorch Docs|PyTorch Docs]] — An entry point to the notes on PyTorch modules, datasets, transforms, and data loaders.
-- [[PyTorch Docs/PyTorch Module|PyTorch Module]] — Reference note for PyTorch's `nn.Module` model-building abstraction.
-- [[PyTorch Docs/PyTorch Dataset|PyTorch Dataset]] — Reference note for representing and retrieving individual data samples.
-- [[PyTorch Docs/PyTorch DataLoader|PyTorch DataLoader]] — Reference note for batching and iterating over dataset samples.
-- [[PyTorch Docs/PyTorch Transforms|PyTorch Transforms]] — Reference note for preprocessing and transforming data.
+- [[PyTorch Docs|PyTorch Docs]] — An entry point to the notes on PyTorch modules, datasets, transforms, and data loaders.
+- [[PyTorch Module|PyTorch Module]] — Reference note for PyTorch's `nn.Module` model-building abstraction.
+- [[PyTorch Dataset|PyTorch Dataset]] — Reference note for representing and retrieving individual data samples.
+- [[PyTorch DataLoader|PyTorch DataLoader]] — Reference note for batching and iterating over dataset samples.
+- [[PyTorch Transforms|PyTorch Transforms]] — Reference note for preprocessing and transforming data.
