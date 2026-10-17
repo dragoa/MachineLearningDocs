@@ -1,0 +1,35 @@
+diff --git a/node_modules/@quartz-community/obsidian-flavored-markdown/dist/index.js b/node_modules/@quartz-community/obsidian-flavored-markdown/dist/index.js
+index 9a0a8ab..8d538a4 100644
+--- a/node_modules/@quartz-community/obsidian-flavored-markdown/dist/index.js
++++ b/node_modules/@quartz-community/obsidian-flavored-markdown/dist/index.js
+@@ -1,6 +1,8 @@
+ import default2 from 'path';
+ import default3 from 'process';
+ import { fileURLToPath } from 'url';
++import remarkParse from 'remark-parse';
++import { unified } from 'unified';
+ 
+ var __defProp = Object.defineProperty;
+ var __export = (target, all7) => {
+@@ -25862,6 +25864,7 @@ var videoExtensionRegex = new RegExp(/\.(mp4|webm|ogv|avi|mov|flv|wmv|mkv|mpg|mp
+ var wikilinkImageEmbedRegex = new RegExp(
+   /^(?<alt>(?!^\d*x?\d*$).*?)?(\|?\s*?(?<width>\d+)(x(?<height>\d+))?)?$/
+ );
++var inlineMarkdownParser = unified().use(remarkParse);
+ var getLiteralValue = (child) => {
+   const literalChild = child;
+   if (typeof literalChild.value === "string") {
+@@ -26015,7 +26018,12 @@ var ObsidianFlavoredMarkdown = (userOpts) => {
+               (node2, index2, parent) => {
+                 if (parent == null || index2 == null) return;
+                 const highlightNode = node2;
+-                const text6 = highlightNode.children?.map(getLiteralValue).join("") ?? "";
++                const source = highlightNode.children?.map(getLiteralValue).join("") ?? "";
++                const parsed = inlineMarkdownParser.parse(source);
++                const paragraph = parsed.children.find((child) => child.type === "paragraph");
++                const text6 = paragraph
++                  ? mdastToHtml({ type: "root", children: paragraph.children })
++                  : source;
+                 parent.children[index2] = {
+                   type: "html",
+                   value: `<span class="text-highlight">${text6}</span>`
