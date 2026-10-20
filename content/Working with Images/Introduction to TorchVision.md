@@ -34,7 +34,7 @@ Converts an image from **PIL format** to a **PyTorch tensor**. PIL stands for
 <p align="center">
   <img src="toTensor.png" width="500">
 </p>
-It also **scales pixel values from the `0-255` range to the `0-1` range**, which helps stabilize training by keeping the inputs consistent.
+For images stored as 8-bit integer pixels, it also **scales pixel values from the `0-255` range to the `0-1` range**. Other input types may have different value ranges.
 
 The resulting tensor is in **CHW** format (channels → height → width). NumPy and PIL use **HWC** (height → width → channels).
 
@@ -104,7 +104,7 @@ Both `Resize()` and `CenterCrop()` take the **desired output size** as an 
 
 ### Normalize()
 
-After `ToTensor()` has brought the values into the `0-1` range, `Normalize()` normalizes each channel to have **mean 0** and **standard deviation 1**. For each channel:
+After `ToTensor()` has brought the values into the `0-1` range, `Normalize()` subtracts the specified mean and divides by the specified standard deviation for each channel:
 
 ```text
 normalized = (x - mean) / std
@@ -124,13 +124,16 @@ img_normalized = normalize(img_tensor)
 Comparing the pixel histograms of each RGB channel before and after:
 
 - **Before** → the distributions may be skewed, so the model may receive inputs that are not balanced across channels
-- **After** → the shape of the distribution stays similar, but values are centered around `0` with std `1`
+- **After** → the values are shifted and scaled according to the supplied statistics; they have mean `0` and standard deviation `1` only when those statistics match the data being normalized
 
 Centering improves learning efficiency, especially with [[Activation Functions|activation functions]] like ReLU or Tanh, and leads to smoother gradient flow, stable optimization steps and faster convergence.
 #### Which mean and std to use?
 
-- Ideally, compute them **directly from our own dataset**, as long as it is big enough
+- Ideally, compute them **from the training portion of our own dataset**
 - For convenience, developers often use the **pre-computed ImageNet values**, which are the ones in the snippet above
+
+> [!note] Use training statistics consistently
+> Compute dataset mean and standard deviation on the training set only, then reuse them for validation, test, and inference data. Avoid random augmentation on validation and test data so that evaluation remains comparable.
 ## Compose and Data Augmentation
 
 Suppose we want every image to follow a specific sequence of steps: resize, center crop, convert to tensor, normalize. ==`Compose()` takes a **list of operations and applies them in sequence**.==
@@ -160,7 +163,7 @@ my_dataset = datasets.OxfordIIITPet(root=oxf_pet_data_path,
 
 A common challenge in computer vision is having a **small dataset**. Even with a good architecture, the data may be too limited to train it effectively.
 
-==One solution is to create **variations of each image**: color jitter, rotation, noise, random crops, random resizing... This is called **image augmentation**.== Each new version effectively becomes a new sample, increasing the **size and variety** of the dataset without collecting new data, and improving **model generalization**.
+==One solution is to create **variations of each image**: color jitter, rotation, noise, random crops, random resizing... This is called **image augmentation**.== It increases the variety of examples seen during training without collecting new images and can improve **model generalization**.
 
 - **`RandomResizedCrop`** → randomly crops and resizes different parts of the image, encouraging the model to focus on all object areas, not just the center. In the example, the crops were resized to `224 × 224`
 - **`RandomHorizontalFlip`** → flips the image horizontally with a default probability of `0.5`. Helps the model learn that objects can appear in either direction
@@ -173,7 +176,7 @@ full_augmentation_pipeline = transforms.Compose([
     transforms.RandomHorizontalFlip(p=0.5),
     transforms.ColorJitter(brightness=0.5, contrast=0.5),
     transforms.ToTensor(),
-    # Using 'mean' and 'std' values as calculated on the 100x100 images
+    # Use statistics calculated from the training set
     transforms.Normalize(mean=dataset_mean,
                          std=dataset_std)
 ])
@@ -196,6 +199,9 @@ To create one, we define a **class** with two methods:
     4. return the modified image
 
 ```python
+import numpy as np
+from PIL import Image
+
 class SaltAndPepperNoise:
     def __init__(self, salt_vs_pepper=0.5, amount=0.04):
         self.s_vs_p = salt_vs_pepper
@@ -205,15 +211,17 @@ class SaltAndPepperNoise:
         output = np.copy(np.array(image))
 
         # Salt: white pixels
-        num_salt = np.ceil(self.amount * image.size[0] * image.size[1] *                            self.s_vs_p)
-        # su riga e colonna tra 0 e img.size, escono num_salt punti 
-        coords = [np.random.randint(0, i - 1, int(num_salt)) for i in image.size]
-        output[coords[1], coords[0]] = 255
+        height, width = output.shape[:2]
+        num_salt = int(np.ceil(self.amount * height * width * self.s_vs_p))
+        salt_x = np.random.randint(0, width, num_salt)
+        salt_y = np.random.randint(0, height, num_salt)
+        output[salt_y, salt_x] = 255
 
         # Pepper: black pixels
-        num_pepper = np.ceil(self.amount * image.size[0] * image.size[1] * (1.0                       - self.s_vs_p))
-        coords = [np.random.randint(0, i - 1, int(num_pepper)) for i in                           image.size]
-        output[coords[1], coords[0]] = 0
+        num_pepper = int(np.ceil(self.amount * height * width * (1.0 - self.s_vs_p)))
+        pepper_x = np.random.randint(0, width, num_pepper)
+        pepper_y = np.random.randint(0, height, num_pepper)
+        output[pepper_y, pepper_x] = 0
 
         return Image.fromarray(output)
 ```
@@ -222,12 +230,12 @@ Once the class is defined, we add it to the pipeline with **a single line** in
 
 ```python
 full_augmentation_pipeline = transforms.Compose([
-	transforms.andomesizedCrop(size=224),
-	transforms.andomorizontallip(p=0.5),
-	transforms.Coloritter(brightness=0.05, contrast=0.05),
-	SaltndPepperNoise(amount=0.00),
+	transforms.RandomResizedCrop(size=224),
+	transforms.RandomHorizontalFlip(p=0.5),
+	transforms.ColorJitter(brightness=0.05, contrast=0.05),
+	SaltAndPepperNoise(amount=0.04),
 	transforms.ToTensor(),
-	# sing 'mean' and 'std' values as calculated on the 00x00 images
+	# Use statistics calculated from the training set
 	transforms.Normalize(mean=dataset_mean,
 	std=dataset_std)
 ])

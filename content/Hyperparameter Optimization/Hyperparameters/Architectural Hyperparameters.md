@@ -14,4 +14,7 @@
 
 ![[activation_functions.png]]
 
-In general, default to ==ReLU for hidden layers==, and choose between ==sigmoid or softmax in the final layer== depending on whether you have a binary or multiclass classifier, respectively.
+In general, ==ReLU is a common choice for hidden layers==. For classification, the final layer usually produces logits: `CrossEntropyLoss` handles multiclass logits, while `BCEWithLogitsLoss` handles binary or multi-label logits.
+
+> [!note] Apply sigmoid or softmax when needed
+> Use sigmoid or softmax to interpret logits as probabilities at inference time, or when a particular downstream task requires probabilities. Do not apply them before `CrossEntropyLoss` or `BCEWithLogitsLoss`, because those losses include the corresponding operation.

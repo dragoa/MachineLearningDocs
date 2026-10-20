@@ -21,8 +21,8 @@ The **first dimension is usually the batch dimension**. It tells the model how 
 The remaining dimensions describe what each individual sample looks like.
 
 ```python
-simple_model = # Expects 1 feature per sample
-nn.Linear(1, 1) output = simple_model(distances)
+simple_model = nn.Linear(1, 1)  # Expects 1 feature per sample
+output = simple_model(distances)
 # Works!
 ```
 
@@ -53,7 +53,7 @@ print(float_tensor.dtype) # torch.float32
 float_tensor = torch.tensor([1, 2, 3], dtype=torch.float32)
 ```
 
-Every tensor has a data type. PyTorch can infer the dtype from the values we provide, or we can set it explicitly specifing the `dtype` or using the `.float()` method.
+Every tensor has a data type. PyTorch can infer the dtype from the values we provide, or we can set it explicitly with the `dtype` argument or convert it using the `.float()` method.
 
 For neural networks, **`float32` is commonly used** because it provides a good balance between precision, memory usage, and computational speed.
 Other common dtypes include:

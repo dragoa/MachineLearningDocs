@@ -16,7 +16,7 @@ $$
 - **Use when:** ==False positives are costly== (we want to minimize false positives)
 	- Spam filter (delete legitimate email = bad)
 	- Fraud detection (block legitimate customer = bad)
-	- Medical test (unnecessary treatment = bad)
+	- Medical screening (unnecessary follow-up or treatment = bad)
 
 **Example:** Model flags 100 emails as spam
 - 90 are actually spam → Precision = 90% (10 false alarms)

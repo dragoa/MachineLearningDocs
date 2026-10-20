@@ -78,6 +78,9 @@ tensor([-1.41, -0.71, 0.00, 0.71, 1.41])
 ```
 
 These transformations help the model train more effectively. The mean and standard deviation should be chosen based on the dataset, usually calculated separately for each image channel.
+
+> [!note] Avoid data leakage
+> Calculate normalization statistics from the training set only, then reuse those same values for validation, test, and inference data. Computing them from the full dataset gives the model information about held-out data.
 # Dataset
 
 A [[PyTorch Dataset|Dataset]] object handles the data and knows how to retrieve individual samples.

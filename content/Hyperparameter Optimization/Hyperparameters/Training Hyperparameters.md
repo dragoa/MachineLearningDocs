@@ -1,6 +1,6 @@
 ##### Definition
 
-**Optimizer** An optimizer is an algorithm that tweaks the model's weights and biases during backpropagation to minimize the loss function and improve performance.
+**Optimizer** An optimizer updates the model's weights and biases using gradients calculated by backpropagation, with the goal of minimizing the loss function.
 
 ```
 Optimizer
@@ -16,16 +16,15 @@ Optimizer
 
 - **Gradient Descent**: adjusts weights and biases based on a gradient to minimize the loss function.
 - **RMSProp** (Root Mean Squared Propagation): adjusts the learning rate for each parameter individually, using a moving average of recent gradients.
-- **Adam** (Adaptive Moment Estimation): one of the most widely used optimizers. Computes adaptive learning rates for each parameter using momentum. ==Straightforward to implement, computationally efficient, and requires little memory.==
+- **Adam** (Adaptive Moment Estimation): one of the most widely used optimizers. It uses estimates of the first and second moments of gradients to adapt updates for each parameter. It is straightforward to use, but its moment estimates require more memory than plain SGD.
 
 **Batch size** The number of samples processed before updating the model's internal parameters. Hardware limitations like RAM and GPU capacity can dictate your choice here.
 
-- **Smaller batch size** → may take longer per epoch, but uses less memory and introduces noise to gradient estimates, which can help escape local minima.
-- **Larger batch size** → smoother and quicker epoch updates, but requires more memory and can get stuck in local minima, potentially affecting convergence.
+- **Smaller batch size** → uses less memory and produces noisier gradient estimates; it may take longer to process the full dataset.
+- **Larger batch size** → produces less noisy gradient estimates and can improve hardware throughput, but requires more memory and may affect generalization and convergence.
 
-==Starting with a batch size of 32 or 64==, depending on your data, is often a good approach.
+==Starting with a batch size of 32 or 64== can be a useful experiment, but the best choice depends on the dataset, model, and available hardware.
 
 Look also: 
 [[Omptimizer & Gradients]]
 [[Learning Rate Schedulers]]
-

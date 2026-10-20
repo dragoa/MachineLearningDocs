@@ -2,7 +2,7 @@
 
 To reduce the risk of overfitting, turn to regularization hyperparameters. These help the model generalize better to unseen data.
 
-- **[[Weight decay]]**: a form of L2 regularization. ==Adds a penalty to the loss function based on the magnitude of the model's weights==, targeting the sum of the squares of the weights, which discourages large weights in favor of a simpler model. In PyTorch, this is set via the `weight_decay` parameter in the optimizer.
+- **[[Weight decay]]**: a regularization technique commonly associated with L2 penalties. ==It discourages large weights== and is configured with the optimizer's `weight_decay` parameter in PyTorch. The exact relationship to an L2 loss penalty depends on the optimizer; for example, AdamW applies decoupled weight decay.
 
 - **Dropout**: ==randomly disables a portion of neurons during training by setting their activation to zero.== Prevents [[co-adaptation]], encouraging the network to learn more robust features. Common dropout rates range from 0.1 to 0.5, and this value is itself tunable as a hyperparameter.
 	

@@ -29,10 +29,10 @@ Note: Accuracy would be useless (99% baseline by always predicting "legitimate")
 
 ### Image Classification (10 classes)
 
-**Priority:** Fair evaluation across all classes
+**Priority:** Choose averaging based on whether classes should count equally or by frequency
 
 ```
-Choose: F1 SCORE with weighted averaging
-Reason: Some classes have more training data than others
-Benefit: Accounts for imbalance, prevents over-optimizing popular classes
+Choose: Macro F1 if every class matters equally; weighted F1 if class frequency should determine each class's contribution
+Reason: The averaging choice determines how much rare classes affect the score
+Note: Weighted F1 does not give rare classes the same influence as common classes
 ```

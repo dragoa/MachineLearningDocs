@@ -16,7 +16,7 @@ For the delivery data, this could include removing impossible delivery times, re
 
 We might also need to perform **feature engineering**, where we ==create useful features from the raw data.==
 
-> **Many machine learning problems are caused by poor or messy data rather than incorrect model mathematics.**
+> [!warning] **Many machine learning problems are caused by poor or messy data rather than incorrect model mathematics.**
 
 See more at: [[PyTorch Data Pipeline]]
 ## 3. Model Building
@@ -38,6 +38,7 @@ A simple neuron with one input and one output, is built in PyTorch using a linea
 model = nn.Sequential(nn.Linear(1, 1))
 ```
 ## 4. Training
+
 After building the model, we need to **train** it.
 ==Training is where the model actually learns the patterns in the data.==
 
@@ -60,7 +61,10 @@ PyTorch handles the mathematical computations involved in this process, allowing
 After training, we need to check how well the model performs on **unseen data**.
 ==A model could perform very well on the data it trained on but perform poorly when given new data.== Therefore, we need to evaluate the model using **unseen data**.
 
-A common approach is to split our dataset into different parts, such as a **training set** and a **test set**. The training set is used to teach the model, while the test set is held back and used later to measure how well the trained model performs on data it hasn't seen before.
+A common approach is to split our dataset into **training, validation, and test sets**. The training set is used to fit the model, the validation set helps compare models and tune settings, and the test set is held back for a final estimate of performance on unseen data.
+
+> [!note] Keep the test set separate
+> Repeatedly using test results to choose a model or tune hyperparameters leaks information from the test set into development. Use validation data for those decisions, and evaluate on the test set when the choices are finalized.
 
 > Does your model work well enough for you to trust it?
 ## 6. Deployment
@@ -83,7 +87,6 @@ import torch.optim as optim
 - `torch` → PyTorch's core functionality, including tensors.
 - `torch.nn` → tools for building [[Neural Network|neural networks]] and layers. 
 - `torch.optim` → optimization algorithms used during training.
-
 ### 1. Define the data
 
 ```python
@@ -118,7 +121,6 @@ If we had multiple features, for example distance, time of day, and temperature,
 So the brackets help PyTorch understand the difference between **samples** and **features**.
 
 `dtype=torch.float32` tells PyTorch to store the values as **32-bit floating-point numbers**, which are commonly used for neural network computations.
-
 ### 2. Build the Model
 
 Now we define our neural network:
@@ -134,7 +136,6 @@ output = weight × input + bias
 ```
 
 The weight and bias are automatically created as the model's **parameters**. During training, PyTorch will adjust these parameters so that the model learns the relationship between distance and delivery time.
-
 ### 3. Loss Function and Optimizer
 
 The model needs two important tools to learn:
@@ -159,7 +160,6 @@ The `lr` parameter is the **[[Learning Rate|learning rate]]** and it controls
 - Larger learning rate → larger updates.
 
 The learning rate needs to be chosen carefully because updates that are too small can make training slow, while updates that are too large can make training unstable.
-
 ## 4. Training Loop
 
 This is where the actual learning happens.
@@ -192,7 +192,6 @@ The gradients tell the optimizer which direction the weight and bias should move
 
 `optimizer.step()`: The optimizer uses those gradients to update the model's parameters.
 After many epochs, the weight and bias should have moved toward values that produce better predictions.
-
 ### 5. Inference
 
 Once training is finished, we can use the model to make predictions on new data.
@@ -203,6 +202,9 @@ with torch.no_grad():
 	predicted_time = model(test_distance)
 	print(f"Predicted time for 25 miles: {predicted_time.item():.1f} minutes")
 ```
+
+> [!note] Be cautious when extrapolating
+> The example trains on distances from 1 to 4 miles and predicts at 25 miles. This demonstrates how to call the model, but a prediction far outside the training range may be unreliable.
 
 `torch.no_grad()` tells PyTorch that we're **not training the model**, we're performing [[Inference]].
 

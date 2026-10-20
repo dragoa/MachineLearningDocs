@@ -151,18 +151,22 @@ import torchmetrics
 # Create metrics
 f1 = torchmetrics.F1Score(task="multiclass", num_classes=10, average="macro")
 
-# During evaluation loop
+# During one validation epoch
 for images, labels in val_loader:
 	predictions = model(images)
 	f1.update(predictions, labels) # Accumulate
 
 # Get final score
 print(f"F1 Score: {f1.compute():.3f}")
+f1.reset() # Clear state before the next validation epoch
 ```
 
-The metric state is updated on each batch. At the end of the epoch it is computed to evaluate the overall performance.
+The metric state is updated on each batch. At the end of the epoch it is computed to evaluate the overall performance, then reset before the next epoch.
 
-For an example of how to choose a metric in a real scenario, take a look at [[Real World Examples]]
+> [!note] Averaging is a metric choice
+> Macro F1 gives every class equal weight; weighted F1 weights each class by its support and can therefore understate poor results on rare classes. In single-label multiclass classification, micro F1 equals accuracy, so use macro F1 when you specifically need to assess class-balanced performance.
+
+For an example of how to choose a metric in a real scenario, see [[Real World Examples]].
 
 ---
 # 3. Learning Rate Schedulers
@@ -182,7 +186,7 @@ The learning rate determines the step size the optimizer takes when updating wei
 - **Too large** → the model overshoots and bounces around, never converging
 - **Just right** → highest accuracy
 
-This forms an **inverted U-shape**: performance is low at both extremes and peaks in the middle. The goal of optimization is to find that peak.
+> [!note] This is a useful conceptual picture, not a universal curve: the best learning rate depends on the model, optimizer, data, and training schedule. A rate that is too small often makes progress slow, while one that is too large can make training unstable or prevent convergence.
 
 ### Before Tuning: How Can You Improve These Metrics?
 
@@ -193,7 +197,7 @@ EXTERNAL FACTORS (check these first)
 ──────────────────────────────────────────────────────────
 Data quantity      Not enough examples of a class?
                    → Model won't learn to recognize it
-                   → Gather more data from open datasets
+                   → Collect more representative, correctly labeled examples
 
 Data quality       Noisy labels?
                    → Model learns wrong patterns
@@ -218,15 +222,15 @@ Training           Learning rate, batch size,
 
 ## Learning Rate Schedulers
 
-A fixed learning rate always forces a trade-off between speed and precision:
+A fixed learning rate can force a trade-off between making rapid early progress and refining the solution later:
 
 ![High vs Low Learning Rate|511](high_vs_low_lr.png)
 
-- ==**High LR:** Accuracy rises fast in early epochs, then flatlines==
-- ==**Low LR:** Climbs slowly but eventually surpasses the high LR, at the cost of many more epochs==
+- **Higher LR:** can make rapid early progress, but may make training unstable or plateau at a worse result.
+- **Lower LR:** can make more gradual updates, but may require more epochs to converge.
 
 **The question:** Can we get the fast start of a high LR *and* the precision of a low LR?
-**The answer:** Yes — with a **learning rate scheduler**.
+**A learning-rate scheduler** can lower or otherwise adjust the learning rate during training, though the schedule still needs to suit the task.
 
 ![[Learning Rate Schedulers]]
 
@@ -289,7 +293,7 @@ def get_model_size(model):
 
 	# Model parameters
 	param_size = 0
-	for param in model.parameters(): # all trainable params
+	for param in model.parameters(): # trainable and frozen parameters
 		param_size += param.nelement() * param.element_size()
 	
 	# Model buffers, non-trainable parameters
@@ -319,17 +323,20 @@ def measure_inference_time(model, input_data, num_iterations=100):
 			_= model(input_data)
 	
 	# Measure
-	start_time = time.time()
+	if device.type == "cuda":
+		torch.cuda.synchronize(device)
+	start_time = time.perf_counter()
 	with torch.no_grad():
 		for _ in range(num_iterations):
 			_ = model(input_data)
-			
-	end_time = time.time()
+	if device.type == "cuda":
+		torch.cuda.synchronize(device)
+	end_time = time.perf_counter()
 	avg_time = (end_time - start_time) / num_iterations
 	return avg_time * 1000 # Convert to ms
 ```
 
-The warmup loop is important because of PyTorch's lazy initialisation and GPU startup costs. The average inference time is computed over several iterations of the same input.
+> [!note] The warmup loop reduces the effect of one-time initialization costs. CUDA operations are asynchronous, so synchronize around the timed section to measure their execution accurately. The result is the average latency for this model, device, input shape, and batch size; it is not a hardware-independent measure.
 
 After computing these metrics, you can combine them into a comprehensive model summary, which can be used to determine the best model: 
 ```
@@ -407,7 +414,7 @@ for metric in metrics:
 		else:
 			# For model size and inference time: lower is better
 			norm_value = 1 - (value - min_val) / range_val
-			normalized[name][metric] = norm_value
+		normalized[name][metric] = norm_value
 ```
 
 For accuracy, where higher is better, you apply min-max normalization. For inference time and model size, where lower is better, you apply the inverse:

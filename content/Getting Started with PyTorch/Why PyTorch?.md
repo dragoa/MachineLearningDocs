@@ -45,10 +45,10 @@ You had to:
 3. Compile it.
 4. Then run your data through it.
 
-The problem was that once the graph was built, changing it wasn't straightforward.
+With a static graph, changing the computation after it was built was not always straightforward.
 For example, if you made a mistake or wanted to experiment with a different operation, you couldn't simply modify your Python code and continue.
 You also couldn't easily test individual parts. You often had to construct the whole computational graph before running it.
-Some frameworks also required specialized operators instead of normal Python:
+Some frameworks or graph-building workflows also used specialized operators instead of ordinary Python control flow:
 
 - `if` statements
 - `for` loops

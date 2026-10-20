@@ -4,11 +4,11 @@ Starting from the CIFAR-10 dataset, we build a flexible CNN (Convolutional Neura
 
 ##### CNN block
 
-A CNN block consist of:
+A CNN block consists of:
 
 - a **[[Convolutional Layer|convolutional layer]]** that computes the convolution operation using a given number of filters and a kernel size
 - a **ReLU [[Activation Functions|activation function]]**
-- a **max [[Pooling|pooling]] layer** which a form of regularization that takes the maximum value from a pool of values
+- a **max [[Pooling|pooling]] layer** that downsamples the feature map by taking the maximum value from each local window
 
 In a flexible architecture, we want to easily change the values of these architectural hyperparameters.
 
@@ -35,6 +35,8 @@ class FlexibleCNN(nn.Module):
 
             # the next block's input channels = this block's output channels
             in_channels = out_channels
+
+        self.features = nn.Sequential(*blocks)
 ```
 
 ==`n_layers` controls how many convolutional blocks are stacked==, while `n_filters` and `kernel_sizes` are lists. For example, to make the first block use 64 filters with a 3×3 kernel and the second use 32 filters with a 5×5 kernel, you'd set `n_filters = [64, 32]` and `kernel_sizes = [3, 5]`.
@@ -112,7 +114,7 @@ A third approach is Bayesian optimization, in particular the Tree-structured Par
 - Focuses on regions with high potential
 - Powerful for large search spaces
 
-The 5 hyperparameters we are gonna use are the one previously defined: `n_layers`, `n_filters`, `kernel_sizes`, `dropout_rate`, and `fc_size`
+The five hyperparameters used here are the ones defined above: `n_layers`, `n_filters`, `kernel_sizes`, `dropout_rate`, and `fc_size`.
 
 To define the search space, we declare the hyperparameters inside the objective function. Using the `trial` object, you can specify, for example, an integer range from 1 to 3. Each time the objective function runs, a new value within this range is selected.
 

@@ -52,7 +52,9 @@ Imagine a delivery company wants to predict delivery times.
 | 2        | 3 min          | 5 min       | −2                          |
 
 To calculate the average error, we subtract the actual value from the predicted value and average the results.
-$$Average Error=2+(−2)2=0$$
+$$
+\text{Average error} = \frac{2 + (-2)}{2} = 0
+$$
 
 The result is zero, which incorrectly suggests that the model made no mistakes!
 Both predictions were actually wrong. The positive and negative errors simply cancel each other out.
@@ -66,8 +68,8 @@ $$
 $$
 Where:
 - $N$ = number of predictions.
-- $y^i$ = predicted value.
-- $y_i$ = actual value.
+- $\hat{y}_i$ = predicted value for sample $i$.
+- $y_i$ = actual value for sample $i$.
 
 For our example:
 $$
@@ -122,7 +124,7 @@ Where:
 
 - $N$ = number of examples.
 - $p_{i,y_i}$ = predicted probability assigned to the correct class for example i.
-- $log⁡$ = natural logarithm.
+- $\log$ = natural logarithm.
 
 - ==If the model assigns a probability close to 1 to the correct class, the loss approaches zero.==
 - ==If the model assigns a probability close to 0 to the correct class, the loss becomes very large.==

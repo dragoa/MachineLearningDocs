@@ -161,11 +161,16 @@ This reduces memory usage and avoids unnecessary gradient calculations.
 Without it, PyTorch may continue tracking operations that aren't needed for evaluation.
 
 ==`model.eval()` changes how certain layers behave, while `torch.no_grad()` disables gradient tracking. They do different things, and you often use them together.==
+
+> [!note] Validation versus test data
+> Use validation data while making model and hyperparameter choices. Keep the test set untouched until the final evaluation; otherwise, repeated decisions based on test results can make the reported performance overly optimistic.
 ## Calculating Accuracy
 
 For image classification, accuracy measures the percentage of predictions that are correct.
 The formula is:
-$$Accuracy=Correct PredictionsTotal Predictions×100$$
+$$
+\text{Accuracy} = \frac{\text{correct predictions}}{\text{total predictions}} \times 100
+$$
 For example, if your model correctly classifies 9,500 digits out of 10,000, its accuracy is 95%.
 
 ```python

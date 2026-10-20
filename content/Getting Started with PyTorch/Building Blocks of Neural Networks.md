@@ -15,9 +15,9 @@ We can see that as the distance increases, the delivery time also tends to incre
 So, all the neuron needs to do is find the right values for `w` and `b` to create the best-fitting line through the data. The process of finding these values is essentially the **learning** part of machine learning.
 ## How Does a Neuron Learn?
 
-To find good values for the parameters, PyTorch starts randomly initialized values for the weight and bias. The neuron then uses these parameters to make predictions and compares those predictions with the actual values in the training data. The difference between the predictions and the actual values is measured using a **[[Loss Function|loss function]]**. The further the predictions are from the actual values, the larger the loss will generally be.
+To find good values for the parameters, PyTorch starts by randomly initializing weight and bias. The neuron then uses these parameters to make predictions and compares those predictions with the actual values in the training data. The difference between the predictions and the actual values is measured using a **[[Loss Function|loss function]]**. The further the predictions are from the actual values, the larger the loss will generally be.
 
-The network then uses **[[Backpropagation|calculus]]**, specifically gradients, to determine how the parameters should change to reduce the loss. It is essentially asking:
+The network then uses **[[Backpropagation|backpropagation]]** to calculate gradients that indicate how the parameters should change to reduce the loss. It is essentially asking:
  
 > If I increase the weight slightly, does the error go up or down?
 

@@ -2,7 +2,7 @@ In the previous example, our delivery model used a single neuron to learn the re
 
 ![[non_linear_pattern.png|514]]
 
-The reason is that ==a linear model assumes the relationship stays linear.== In reality, the delivery time behaves differently not following a linear function. ==We need then a model that can learn nonlinear patterns.==
+The reason is that ==a linear model assumes the relationship stays linear.== In reality, delivery time may not follow a linear function. ==We therefore need a model that can learn nonlinear patterns.==
 # Why More Neurons Aren't Enough
 
 You might think that adding more neurons would solve the problem. However, simply stacking linear neurons does **not** make the model nonlinear.
@@ -47,7 +47,7 @@ model = nn.Sequential(
 )
 ```
 
-The ReLU activation function is commonly used in hidden layers in real word applications.
+The ReLU activation function is commonly used in hidden layers in real-world applications.
 
 ---
 
@@ -75,7 +75,7 @@ Each neuron has its own **weight and bias**, so each neuron can activate at a d
 
 ![[activation_function_result.png|483]]
 
-### Non Linear Model
+### Nonlinear Model
 
 A simple network for this problem could look like:
 
@@ -114,3 +114,6 @@ takes those three transformed values and combines them into **one final output*
 ## Tanh
 
 - **Tanh** → maps values between `-1` and `1`.
+
+> [!note] Output activations and loss functions
+> For classification, the final layer often returns raw logits rather than applying sigmoid or softmax directly. Losses such as `CrossEntropyLoss` and `BCEWithLogitsLoss` apply the necessary operations internally; applying the activation first can make training numerically less stable.
